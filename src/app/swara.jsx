@@ -3,57 +3,57 @@
 import React, { useState } from "react";
 
 export default function SWARACalculator() {
-  const [numCriteria, setNumCriteria] = useState(0);
-  const [numAlternatives, setNumAlternatives] = useState(0);
-  const [criteriaWeights, setCriteriaWeights] = useState([]);
-  const [alternativesScores, setAlternativesScores] = useState([[], []]);
-  const [normalizedScores, setNormalizedScores] = useState([]);
-  const [swaraScores, setSWARAScores] = useState([]);
+  // const [numCriteria, setNumCriteria] = useState(0);
+  // const [numAlternatives, setNumAlternatives] = useState(0);
+  // const [criteriaWeights, setCriteriaWeights] = useState([]);
+  // const [alternativesScores, setAlternativesScores] = useState([[], []]);
+  // const [normalizedScores, setNormalizedScores] = useState([]);
+  // const [swaraScores, setSWARAScores] = useState([]);
 
-  const handleNumCriteriaChange = (event) => {
-    setNumCriteria(parseInt(event.target.value));
-  };
+  // const handleNumCriteriaChange = (event) => {
+  //   setNumCriteria(parseInt(event.target.value));
+  // };
 
-  const handleNumAlternativesChange = (event) => {
-    setNumAlternatives(parseInt(event.target.value));
-  };
+  // const handleNumAlternativesChange = (event) => {
+  //   setNumAlternatives(parseInt(event.target.value));
+  // };
 
-  const handleCriteriaWeightChange = (index, value) => {
-    criteriaWeights[index] = parseFloat(value);
-    setCriteriaWeights([...criteriaWeights]);
-  };
+  // const handleCriteriaWeightChange = (index, value) => {
+  //   criteriaWeights[index] = parseFloat(value);
+  //   setCriteriaWeights([...criteriaWeights]);
+  // };
 
-  const handleAlternativesScoreChange = (rowIndex, colIndex, value) => {
-    alternativesScores[rowIndex][colIndex] = parseFloat(value);
-    setAlternativesScores([...alternativesScores]);
-  };
+  // const handleAlternativesScoreChange = (rowIndex, colIndex, value) => {
+  //   alternativesScores[rowIndex][colIndex] = parseFloat(value);
+  //   setAlternativesScores([...alternativesScores]);
+  // };
 
-  const calculateSWARAScores = () => {
-    const normalized = [];
+  // const calculateSWARAScores = () => {
+  //   const normalized = [];
 
-    for (let i = 0; i < numAlternatives; i++) {
-      let sum = 0;
-      for (let j = 0; j < numCriteria; j++) {
-        sum += alternativesScores[i][j];
-      }
-      normalized.push(sum / numCriteria);
-    }
-    setNormalizedScores(normalized);
+  //   for (let i = 0; i < numAlternatives; i++) {
+  //     let sum = 0;
+  //     for (let j = 0; j < numCriteria; j++) {
+  //       sum += alternativesScores[i][j];
+  //     }
+  //     normalized.push(sum / numCriteria);
+  //   }
+  //   setNormalizedScores(normalized);
 
-    const swara = [];
-    for (let i = 0; i < numAlternatives; i++) {
-      let score = 0;
-      for (let j = 0; j < numCriteria; j++) {
-        score += criteriaWeights[j] * normalized[i];
-      }
-      swara.push(score);
-    }
-    setSWARAScores(swara);
-  };
+  //   const swara = [];
+  //   for (let i = 0; i < numAlternatives; i++) {
+  //     let score = 0;
+  //     for (let j = 0; j < numCriteria; j++) {
+  //       score += criteriaWeights[j] * normalized[i];
+  //     }
+  //     swara.push(score);
+  //   }
+  //   setSWARAScores(swara);
+  // };
 
   return (
     <>
-      <div>
+      {/* <div>
         <h1 className="text-center text-white text-lg">
           SWARA Calculator (Manual)
         </h1>
@@ -141,7 +141,7 @@ export default function SWARACalculator() {
             ))}
           </div>
         </div>
-      </div>
+      </div> */}
     </>
   );
 }
