@@ -2,16 +2,22 @@
 
 import { useState, useRef } from "react";
 import { Tooltip } from "@nextui-org/react";
+import { Button } from "@nextui-org/react";
 
 export default function SelectionBox() {
+  const [isLoading, setIsLoading] = useState(false)
   const [mainPriority, setMainPriority] = useState(["Gaming", "Work", "Daily"]); // Need better wording, this is too ambiguous
-  const [tooltipPrimary, setTooltipPrimary] = useState(["lorem ipsum", "lorem ipsum", "lorem ipsum"]); // Need better wording, this is too ambiguous
+  const [tooltipPrimary, setTooltipPrimary] = useState([
+    "lorem ipsum",
+    "lorem ipsum",
+    "lorem ipsum",
+  ]); // Need better wording, this is too ambiguous
   const [secondaryPriority, setSecondaryPriority] = useState([
     "Processor",
     "Graphic Card",
     "SSD/HDD",
     "RAM",
-    "Price",
+    // "Price",
   ]); // Fix the categories
 
   // Drag and drop
@@ -20,7 +26,7 @@ export default function SelectionBox() {
   const dragItem = useRef(null);
   const dragOverItem = useRef(null);
 
-  // Drag and Hover Logic
+  // Drag and Hover Logic2
 
   //const handle drag sorting
   const handleSortMain = () => {
@@ -53,12 +59,13 @@ export default function SelectionBox() {
     setSecondaryPriority(_secondaryPriority);
   };
 
-  const handleHoverDesc = () => {};
-
+  const setLoading = () => {
+    setIsLoading(true)
+  }
   return (
     <div>
       <div>
-        <h1 className="text-left font-bold text-lg text-slate-800">
+        <h1 className="text-center font-bold text-lg text-slate-800">
           Selection Priority
         </h1>
       </div>
@@ -73,7 +80,7 @@ export default function SelectionBox() {
                 <Tooltip
                   color="primary"
                   placement="right"
-                  content={tooltipPrimary[index]}
+                  content={"Drag and drop to modify your priority"}
                   className="capitalize"
                   showArrow={true}
                 >
@@ -102,26 +109,60 @@ export default function SelectionBox() {
           </p>
           {secondaryPriority.map((criterion, index) => (
             <div key={index}>
-              <div
-                className="border-slate-700 border-2 bg-white cursor-move"
-                draggable
-                onDragStart={(e) => (dragItem.current = index)}
-                onDragEnter={(e) => (dragOverItem.current = index)}
-                onDragEnd={handleSortSecondary}
-                onDragOver={(e) => e.preventDefault()}
+              <Tooltip
+                color="primary"
+                placement="right"
+                content={"Drag and drop to modify your priority"}
+                className="capitalize"
+                showArrow={true}
               >
-                <p className="font-semibold text-center select-none text-sm text-black">
-                  {criterion}
-                </p>
-              </div>
+                <div
+                  className="border-slate-700 border-2 bg-white cursor-move"
+                  draggable
+                  onDragStart={(e) => (dragItem.current = index)}
+                  onDragEnter={(e) => (dragOverItem.current = index)}
+                  onDragEnd={handleSortSecondary}
+                  onDragOver={(e) => e.preventDefault()}
+                >
+                  <p className="font-semibold text-center select-none text-sm text-black">
+                    {criterion}
+                  </p>
+                </div>
+              </Tooltip>
               <br />
             </div>
           ))}
         </div>
+        <div className="relative py-3">
+          <p className="text-center font-bold text-base text-slate-800">
+            Budget
+          </p>
+            <div>
+              <Tooltip
+                color="primary"
+                placement="right"
+                content={"Input your maximum budget"}
+                className="capitalize"
+                showArrow={true}
+              >
+                <div
+                  className=""
+                >
+                  <input type="text" className="border-slate-700 border-2 bg-white font-semibold text-center select-none text-sm text-black"/>
+                </div>
+              </Tooltip>
+              <br />
+            </div>
+        </div>
         <div className="flex items-end">
-          <button className="flex text-center bg-white border-slate-700 border text-sm">
+          <Button
+            color="success"
+            className="flex text-center text-sm text-white"
+            onClick={setLoading}
+            isLoading={isLoading}
+          >
             Calculate
-          </button>
+          </Button>
         </div>
       </div>
     </div>
