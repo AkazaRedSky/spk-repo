@@ -12,7 +12,7 @@ export default function Results() {
   return (
     <div>
       <div>
-        <h1 className="text-center text-white text-lg">Results</h1>
+        <h1 className="text-center font-bold text-lg text-slate-800">Results</h1>
         <button onClick={(e) => setImageVisibility(true)}> - </button>
       </div>
       {imageVisibility ? (

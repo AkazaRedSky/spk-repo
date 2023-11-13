@@ -1,9 +1,7 @@
-import Image from "next/image";
 import Title from "./title";
 import SelectionBox from "./selection";
-import SWARACalculator from "./swara";
 import Results from "./results";
-import {NextUIProvider} from "@nextui-org/react";
+import SWARACalc from "./swaracalc/swaracalc";
 
 export default function Home() {
   return (
@@ -12,9 +10,9 @@ export default function Home() {
 
       <div className="flex col gap-5 justify-between">
         <SelectionBox />
+        <SWARACalc />
         <Results />
       </div>
-      {/* <SWARACalculator /> */}
     </main>
   );
 }
