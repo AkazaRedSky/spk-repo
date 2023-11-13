@@ -3,6 +3,8 @@ import Title from "./title";
 import SelectionBox from "./selection";
 import SWARACalculator from "./swara";
 import Results from "./results";
+import {NextUIProvider} from "@nextui-org/react";
+
 export default function Home() {
   return (
     <main className="flex min-h-screen flex-col p-24">
