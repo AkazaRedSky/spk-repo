@@ -1,4 +1,6 @@
-import React from "react";
+'use client'
+
+import React, { useEffect, useState } from "react";
 import {
   Table,
   TableHeader,
@@ -8,44 +10,22 @@ import {
   TableCell,
   getKeyValue,
 } from "@nextui-org/react";
+import { collection, getDocs } from "firebase/firestore"; 
+import { firestoredb } from "api/firestore.js";
 
 export default function SWARAMain() {
-  const rows = [
-    {
-      key: "1",
-      name: "Anonymous",
-      gaming: "2",
-      work: "3",
-      daily: "1",
-    },
-    {
-      key: "2",
-      name: "Anonymous",
-      gaming: "2",
-      work: "3",
-      daily: "1",
-    },
-    {
-      key: "3",
-      name: "Anonymous",
-      gaming: "2",
-      work: "3",
-      daily: "1",
-    },
-    {
-      key: "4",
-      name: "Anonymous",
-      gaming: "2",
-      work: "3",
-      daily: "1",
-    },
-  ];
+  const [rows, setRows] = useState([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const data = await getDocs(collection(firestoredb, "priorities"));
+      setRows(data.docs.map(doc => ({ ...doc.data(), id: doc.id })));
+    };
+
+    fetchData();
+  }, []);
 
   const columns = [
-    {
-      key: "name",
-      label: "Name",
-    },
     {
       key: "gaming",
       label: "Gaming",

@@ -12,17 +12,20 @@ export default function Results() {
   return (
     <div>
       <div>
-        <h1 className="text-center font-bold text-lg text-slate-800">Results</h1>
+        <h1 className="text-center font-bold text-lg text-slate-800">
+          Results
+        </h1>
         <button onClick={(e) => setImageVisibility(true)}> - </button>
       </div>
       {imageVisibility ? (
         <>
-          <div className="flex col col-span-2">
-          <Image src={RTXIMG} />
-          <Image src={RAM} />
-          <Image src={SSD} />
-          <Image src={CPU} />
+          <div className="grid grid-cols-2 gap-2 col-span-2">
+            <Image className="w-3/4" src={RTXIMG} />
+            <Image className="w-3/4" src={RAM} />
+            <Image className="w-3/4" src={SSD} />
+            <Image className="w-3/4" src={CPU} />
           </div>
+
           <button onClick={(e) => setImageVisibility(false)}> - </button>
         </>
       ) : (

@@ -10,10 +10,6 @@ export default function SWARASecondary() {
 
   const columns = [
     {
-      key: "name",
-      label: "Name",
-    },
-    {
       key: "cpu",
       label: "Processor",
     },

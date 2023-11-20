@@ -66,7 +66,7 @@ export default function SWARAWeight() {
     <div>
       <div>
         <p className="text-center font-bold text-base text-slate-800">
-          Main Priority
+          Final Calculation
         </p>
       </div>
       <Table aria-label="Example table with dynamic content">
