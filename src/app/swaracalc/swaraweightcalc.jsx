@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useContext } from "react";
 import {
   Table,
   TableHeader,
@@ -9,19 +9,27 @@ import {
   TableRow,
   TableCell,
 } from "@nextui-org/react";
+import { SWARAContext } from "src/app/context/swaracontext";
 
 export default function SWARAWeight() {
-  const [data, setData] = useState([
-    [2, 1, 3, 6, 7, 5, 4],
-  ]);
+  const { mainPriorityIndex, secondaryPriorityIndex } = useContext(SWARAContext); // use the context
+
+  // Convert the priority indices to an array of numbers
+  const mainPriorities = Object.values(mainPriorityIndex).map(Number);
+  const secondaryPriorities = Object.values(secondaryPriorityIndex).map(value => Number(value) + 3);
+
+  // Combine the two arrays into one
+  const priorities = [...mainPriorities, ...secondaryPriorities];
+
+  const [data, setData] = useState([priorities]);
 
   const criteria = [
     "Gaming",
     "Work",
     "Daily",
     "Processor",
-    "Graphic Card",
-    "SSD/HDD",
+    "GraphicCard",
+    "Storage",
     "RAM",
   ];
 
