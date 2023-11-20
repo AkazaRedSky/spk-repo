@@ -1,29 +1,36 @@
-import React from "react";
-import {Table, TableHeader, TableColumn, TableBody, TableRow, TableCell, getKeyValue} from "@nextui-org/react";
+import React, { useContext } from "react";
+import {
+  Table,
+  TableHeader,
+  TableColumn,
+  TableBody,
+  TableRow,
+  TableCell,
+  getKeyValue,
+} from "@nextui-org/react";
+import { SWARAContext } from "src/app/context/swaracontext";
 
 export default function SWARASecondary() {
+  const { secondaryPriorityIndex } = useContext(SWARAContext);
   const rows = [
     {
       key: "1",
+      ...secondaryPriorityIndex,
     },
   ];
 
   const columns = [
     {
-      key: "name",
-      label: "Name",
-    },
-    {
-      key: "cpu",
+      key: "processor",
       label: "Processor",
     },
     {
-      key: "gpu",
+      key: "graphiccard",
       label: "Graphic Card",
     },
     {
       key: "storage",
-      label: "SSD/HDD",
+      label: "Storage",
     },
     {
       key: "ram",
@@ -33,9 +40,9 @@ export default function SWARASecondary() {
   return (
     <div>
       <div>
-      <p className="text-center font-bold text-base text-slate-800">
-              Secondary Priority
-            </p>
+        <p className="text-center font-bold text-base text-slate-800">
+          Secondary Priority
+        </p>
       </div>
       <Table aria-label="Example table with dynamic content">
         <TableHeader columns={columns}>

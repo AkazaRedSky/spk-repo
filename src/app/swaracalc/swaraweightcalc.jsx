@@ -1,4 +1,6 @@
-import React from "react";
+"use client";
+
+import React, { useState, useContext } from "react";
 import {
   Table,
   TableHeader,
@@ -6,44 +8,56 @@ import {
   TableBody,
   TableRow,
   TableCell,
-  getKeyValue,
 } from "@nextui-org/react";
+import { SWARAContext } from "src/app/context/swaracontext";
 
 export default function SWARAWeight() {
-  const rows = [
-    {
-      key: "1",
-      criteria: "Gaming",
-    },
-    {
-      key: "2",
-      criteria: "Work",
-    },
-    {
-      key: "3",
-      criteria: "Daily",
-    },
-    {
-      key: "4",
-      criteria: "Processor",
-    },
-    {
-      key: "5",
-      criteria: "Graphic Card",
-    },
-    {
-      key: "6",
-      criteria: "SSD/HDD",
-    },
-    {
-      key: "7",
-      criteria: "RAM",
-    },
-    // {
-    //   key: "8",
-    //   criteria: "PRICE",
-    // },
+  const { mainPriorityIndex, secondaryPriorityIndex } = useContext(SWARAContext); // use the context
+
+  // Convert the priority indices to an array of numbers
+  const mainPriorities = Object.values(mainPriorityIndex).map(Number);
+  const secondaryPriorities = Object.values(secondaryPriorityIndex).map(value => Number(value) + 3);
+
+  // Combine the two arrays into one
+  const priorities = [...mainPriorities, ...secondaryPriorities];
+
+  const [data, setData] = useState([priorities]);
+
+  const criteria = [
+    "Gaming",
+    "Work",
+    "Daily",
+    "Processor",
+    "GraphicCard",
+    "Storage",
+    "RAM",
   ];
+
+  const calculateSWARA = () => {
+    let sum = Array(data[0].length).fill(0);
+    data.forEach((row) => {
+      row.forEach((value, index) => {
+        sum[index] += value;
+      });
+    });
+
+    let weights = sum.map((value) => 1 / value);
+    let totalWeight = weights.reduce((a, b) => a + b, 0);
+    let weightPercentage = weights.map(
+      (weight) => (weight / totalWeight) * 100
+    );
+
+    return criteria.map((criterion, index) => ({
+      key: index + 1,
+      criteria: criterion,
+      relativeweight: weights[index],
+      weight: weights[index],
+      weightpercent: weightPercentage[index],
+    }));
+  };
+
+  const rows = calculateSWARA();
+
   const columns = [
     {
       key: "criteria",
@@ -66,7 +80,7 @@ export default function SWARAWeight() {
     <div>
       <div>
         <p className="text-center font-bold text-base text-slate-800">
-          Main Priority
+          Final Calculation
         </p>
       </div>
       <Table aria-label="Example table with dynamic content">
@@ -79,7 +93,9 @@ export default function SWARAWeight() {
           {(item) => (
             <TableRow key={item.key}>
               {(columnKey) => (
-                <TableCell>{getKeyValue(item, columnKey)}</TableCell>
+                <TableCell key={`${item.key}-${columnKey}`}>
+                  {item[columnKey]}
+                </TableCell>
               )}
             </TableRow>
           )}
