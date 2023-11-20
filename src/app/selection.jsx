@@ -1,13 +1,17 @@
 "use client";
 
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect, useContext } from "react";
 import { Tooltip } from "@nextui-org/react";
 import { Button } from "@nextui-org/react";
-
+import { SWARAContext } from "./context/swaracontext";
 export default function SelectionBox() {
+  const { setMainPriorityIndex, setSecondaryPriorityIndex } =
+    useContext(SWARAContext);
+
   const [maxBudget, setMaxBudget] = useState();
   const [isLoading, setIsLoading] = useState(false);
   const [mainPriority, setMainPriority] = useState(["Gaming", "Work", "Daily"]); // Need better wording, this is too ambiguous
+
   const [tooltipPrimary, setTooltipPrimary] = useState([
     "lorem ipsum",
     "lorem ipsum",
@@ -15,8 +19,8 @@ export default function SelectionBox() {
   ]); // Need better wording, this is too ambiguous
   const [secondaryPriority, setSecondaryPriority] = useState([
     "Processor",
-    "Graphic Card",
-    "SSD/HDD",
+    "GraphicCard",
+    "Storage",
     "RAM",
     // "Price",
   ]); // Fix the categories
@@ -60,8 +64,24 @@ export default function SelectionBox() {
     setSecondaryPriority(_secondaryPriority);
   };
 
+  useEffect(() => {
+    let newPriorityIndex = {};
+    mainPriority.forEach((priority, index) => {
+      newPriorityIndex[priority.toLowerCase()] = index + 1; // we add 1 because index is 0-based
+    });
+    setMainPriorityIndex(newPriorityIndex); // This will update mainPriorityIndex in your context
+  }, [mainPriority, setMainPriorityIndex]);
+
+  useEffect(() => {
+    let newPriorityIndex = {};
+    secondaryPriority.forEach((priority, index) => {
+      newPriorityIndex[priority.toLowerCase()] = index + 1; // we add 1 because index is 0-based
+    });
+    setSecondaryPriorityIndex(newPriorityIndex); // This will update mainPriorityIndex in your context
+  }, [secondaryPriority, setSecondaryPriorityIndex]);
+
   const handleMaxBudget = (e) => {
-    setMaxBudget(e.target.value.replace(/\D/, ''));
+    setMaxBudget(e.target.value.replace(/\D/, ""));
   };
 
   const handleCalculate = () => {
@@ -150,14 +170,14 @@ export default function SelectionBox() {
               className="capitalize"
               showArrow={true}
             >
-                <input
-                  type="text"
-                  className="border-slate-700 border-2 bg-white font-semibold text-center select-none text-sm text-black"
-                  value={maxBudget}
-                  onChange={handleMaxBudget}
-                  pattern="[0-9]*"
-                  inputMode="numeric"
-                />
+              <input
+                type="text"
+                className="border-slate-700 border-2 bg-white font-semibold text-center select-none text-sm text-black"
+                value={maxBudget}
+                onChange={handleMaxBudget}
+                pattern="[0-9]*"
+                inputMode="numeric"
+              />
             </Tooltip>
             <br />
           </div>

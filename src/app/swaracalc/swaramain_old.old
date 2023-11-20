@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useContext } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Table,
   TableHeader,
@@ -10,16 +10,20 @@ import {
   TableCell,
   getKeyValue,
 } from "@nextui-org/react";
-import { SWARAContext } from "src/app/context/swaracontext";
+import { collection, getDocs } from "firebase/firestore"; 
+import { firestoredb } from "api/firestore.js";
 
 export default function SWARAMain() {
-  const { mainPriorityIndex } = useContext(SWARAContext);
-  const rows = [
-    {
-      key: "1",
-      ...mainPriorityIndex,
-    },
-  ];
+  const [rows, setRows] = useState([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const data = await getDocs(collection(firestoredb, "priorities"));
+      setRows(data.docs.map(doc => ({ ...doc.data(), id: doc.id })));
+    };
+
+    fetchData();
+  }, []);
 
   const columns = [
     {
@@ -51,10 +55,10 @@ export default function SWARAMain() {
         <TableBody items={rows}>
           {(item) => (
             <TableRow key={item.key}>
-            {(columnKey) => (
-              <TableCell>{getKeyValue(item, columnKey) !== undefined ? getKeyValue(item, columnKey) : ""}</TableCell>
-            )}
-          </TableRow>
+              {(columnKey) => (
+                <TableCell>{getKeyValue(item, columnKey)}</TableCell>
+              )}
+            </TableRow>
           )}
         </TableBody>
       </Table>
