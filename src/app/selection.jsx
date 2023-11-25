@@ -67,17 +67,17 @@ export default function SelectionBox() {
   useEffect(() => {
     let newPriorityIndex = {};
     mainPriority.forEach((priority, index) => {
-      newPriorityIndex[priority.toLowerCase()] = index + 1; // we add 1 because index is 0-based
+      newPriorityIndex[priority.toLowerCase()] = index + 1;
     });
-    setMainPriorityIndex(newPriorityIndex); // This will update mainPriorityIndex in your context
+    setMainPriorityIndex(newPriorityIndex); 
   }, [mainPriority, setMainPriorityIndex]);
 
   useEffect(() => {
     let newPriorityIndex = {};
     secondaryPriority.forEach((priority, index) => {
-      newPriorityIndex[priority.toLowerCase()] = index + 1; // we add 1 because index is 0-based
+      newPriorityIndex[priority.toLowerCase()] = index + 1;
     });
-    setSecondaryPriorityIndex(newPriorityIndex); // This will update mainPriorityIndex in your context
+    setSecondaryPriorityIndex(newPriorityIndex);
   }, [secondaryPriority, setSecondaryPriorityIndex]);
 
   const handleMaxBudget = (e) => {
