@@ -59,10 +59,10 @@ export default function SWARAWeight() {
       mainPriorityIndex["gaming"],
       mainPriorityIndex["work"],
       mainPriorityIndex["daily"],
-      secondaryPriorityIndex["processor"],
-      secondaryPriorityIndex["graphiccard"],
-      secondaryPriorityIndex["storage"],
-      secondaryPriorityIndex["ram"],
+      Number(secondaryPriorityIndex["processor"]+3),
+      Number(secondaryPriorityIndex["graphiccard"]+3),
+      Number(secondaryPriorityIndex["storage"]+3),
+      Number(secondaryPriorityIndex["ram"]+3),
     ];
     setData([priorities]);
   }, [mainPriorityIndex, secondaryPriorityIndex]);
@@ -92,11 +92,11 @@ export default function SWARAWeight() {
   return (
     <div>
       <div>
-        <p className="text-center font-bold text-base text-slate-800">
+        <p className="text-center font-bold text-lg text-slate-900">
           Final Calculation
         </p>
       </div>
-      <Table aria-label="Example table with dynamic content">
+      <Table aria-label="tabelcalcfinal">
         <TableHeader columns={columns}>
           {(column) => (
             <TableColumn key={column.key}>{column.label}</TableColumn>
@@ -106,7 +106,7 @@ export default function SWARAWeight() {
           {(item) => (
             <TableRow key={item.key}>
               {(columnKey) => (
-                <TableCell key={`${item.key}-${columnKey}`}>
+                <TableCell className="text-center" key={`${item.key}-${columnKey}`}>
                   {item[columnKey]}
                 </TableCell>
               )}
