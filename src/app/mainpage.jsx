@@ -7,7 +7,8 @@ import SWARACalc from "./swaracalc/swaracalc";
 import { SWARAContext } from "./context/swaracontext";
 
 export default function MainPage() {
-  const [maxBudget, setMaxBudget] = useState();
+  const [maxBudget, setMaxBudget] = useState(5000000);
+  const [resultVisibility, setResultVisibility] = useState(false);
   const [mainPriorityIndex, setMainPriorityIndex] = useState({
     gaming: "1",
     work: "2",
@@ -30,6 +31,8 @@ export default function MainPage() {
           setMainPriorityIndex,
           secondaryPriorityIndex,
           setSecondaryPriorityIndex,
+          resultVisibility,
+          setResultVisibility,
         }}
       >
         <SelectionBox />

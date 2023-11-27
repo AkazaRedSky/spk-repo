@@ -5,18 +5,11 @@ import { Tooltip } from "@nextui-org/react";
 import { Button } from "@nextui-org/react";
 import { SWARAContext } from "./context/swaracontext";
 export default function SelectionBox() {
-  const { setMainPriorityIndex, setSecondaryPriorityIndex } =
-    useContext(SWARAContext);
+  const { setMainPriorityIndex, setSecondaryPriorityIndex, setResultVisibility, maxBudget, setMaxBudget } = useContext(SWARAContext);
 
-  const [maxBudget, setMaxBudget] = useState();
   const [isLoading, setIsLoading] = useState(false);
   const [mainPriority, setMainPriority] = useState(["Gaming", "Work", "Daily"]); // Need better wording, this is too ambiguous
 
-  const [tooltipPrimary, setTooltipPrimary] = useState([
-    "lorem ipsum",
-    "lorem ipsum",
-    "lorem ipsum",
-  ]); // Need better wording, this is too ambiguous
   const [secondaryPriority, setSecondaryPriority] = useState([
     "Processor",
     "GraphicCard",
@@ -82,10 +75,17 @@ export default function SelectionBox() {
 
   const handleMaxBudget = (e) => {
     setMaxBudget(e.target.value.replace(/\D/, ""));
+    setResultVisibility(false);
+    setIsLoading(false);
   };
 
   const handleCalculate = () => {
-    setIsLoading(true);
+  setIsLoading(true);
+
+  setTimeout(() => {
+    setIsLoading(false);
+    setResultVisibility(true);
+  }, 15000); // 15 seconds
   };
   return (
     <div>

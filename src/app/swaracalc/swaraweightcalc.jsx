@@ -99,7 +99,7 @@ export default function SWARAWeight() {
       <Table aria-label="tabelcalcfinal">
         <TableHeader columns={columns}>
           {(column) => (
-            <TableColumn key={column.key}>{column.label}</TableColumn>
+            <TableColumn className="text-center" key={column.key}>{column.label}</TableColumn>
           )}
         </TableHeader>
         <TableBody items={rows}>
