@@ -9,8 +9,8 @@ export default function SWARACalc() {
       <div className="text-center font-bold text-lg text-slate-800">
         Calculation
       </div>
-      <div>
-        <div className="flex gap-6">
+      <div className="grid gap-y-8">
+        <div className="flex justify-center gap-x-6">
           <SWARAMain />
           <SWARASecondary />
         </div>

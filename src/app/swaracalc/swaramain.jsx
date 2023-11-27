@@ -42,7 +42,7 @@ export default function SWARAMain() {
           Main Priority
         </p>
       </div>
-      <Table aria-label="Example table with dynamic content">
+      <Table aria-label="tablecalcmain">
         <TableHeader columns={columns}>
           {(column) => (
             <TableColumn key={column.key}>{column.label}</TableColumn>
@@ -52,7 +52,7 @@ export default function SWARAMain() {
           {(item) => (
             <TableRow key={item.key}>
             {(columnKey) => (
-              <TableCell>{getKeyValue(item, columnKey) !== undefined ? getKeyValue(item, columnKey) : ""}</TableCell>
+              <TableCell className="text-center">{getKeyValue(item, columnKey) !== undefined ? getKeyValue(item, columnKey) : ""}</TableCell>
             )}
           </TableRow>
           )}

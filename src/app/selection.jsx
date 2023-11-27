@@ -5,18 +5,11 @@ import { Tooltip } from "@nextui-org/react";
 import { Button } from "@nextui-org/react";
 import { SWARAContext } from "./context/swaracontext";
 export default function SelectionBox() {
-  const { setMainPriorityIndex, setSecondaryPriorityIndex } =
-    useContext(SWARAContext);
+  const { setMainPriorityIndex, setSecondaryPriorityIndex, setResultVisibility, maxBudget, setMaxBudget } = useContext(SWARAContext);
 
-  const [maxBudget, setMaxBudget] = useState();
   const [isLoading, setIsLoading] = useState(false);
   const [mainPriority, setMainPriority] = useState(["Gaming", "Work", "Daily"]); // Need better wording, this is too ambiguous
 
-  const [tooltipPrimary, setTooltipPrimary] = useState([
-    "lorem ipsum",
-    "lorem ipsum",
-    "lorem ipsum",
-  ]); // Need better wording, this is too ambiguous
   const [secondaryPriority, setSecondaryPriority] = useState([
     "Processor",
     "GraphicCard",
@@ -67,25 +60,32 @@ export default function SelectionBox() {
   useEffect(() => {
     let newPriorityIndex = {};
     mainPriority.forEach((priority, index) => {
-      newPriorityIndex[priority.toLowerCase()] = index + 1; // we add 1 because index is 0-based
+      newPriorityIndex[priority.toLowerCase()] = index + 1;
     });
-    setMainPriorityIndex(newPriorityIndex); // This will update mainPriorityIndex in your context
+    setMainPriorityIndex(newPriorityIndex); 
   }, [mainPriority, setMainPriorityIndex]);
 
   useEffect(() => {
     let newPriorityIndex = {};
     secondaryPriority.forEach((priority, index) => {
-      newPriorityIndex[priority.toLowerCase()] = index + 1; // we add 1 because index is 0-based
+      newPriorityIndex[priority.toLowerCase()] = index + 1;
     });
-    setSecondaryPriorityIndex(newPriorityIndex); // This will update mainPriorityIndex in your context
+    setSecondaryPriorityIndex(newPriorityIndex);
   }, [secondaryPriority, setSecondaryPriorityIndex]);
 
   const handleMaxBudget = (e) => {
     setMaxBudget(e.target.value.replace(/\D/, ""));
+    setResultVisibility(false);
+    setIsLoading(false);
   };
 
   const handleCalculate = () => {
-    setIsLoading(true);
+  setIsLoading(true);
+
+  setTimeout(() => {
+    setIsLoading(false);
+    setResultVisibility(true);
+  }, 15000); // 15 seconds
   };
   return (
     <div>

@@ -13,35 +13,35 @@ import {
 import { collection, getDocs } from "firebase/firestore"; 
 import { firestoredb } from "api/firestore.js";
 
-export default function SWARAMain() {
-  const [rows, setRows] = useState([]);
+export default function SWARAMainOld() {
+  // const [rows, setRows] = useState([]);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      const data = await getDocs(collection(firestoredb, "priorities"));
-      setRows(data.docs.map(doc => ({ ...doc.data(), id: doc.id })));
-    };
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     const data = await getDocs(collection(firestoredb, "priorities"));
+  //     setRows(data.docs.map(doc => ({ ...doc.data(), id: doc.id })));
+  //   };
 
-    fetchData();
-  }, []);
+  //   fetchData();
+  // }, []);
 
-  const columns = [
-    {
-      key: "gaming",
-      label: "Gaming",
-    },
-    {
-      key: "work",
-      label: "Work",
-    },
-    {
-      key: "daily",
-      label: "Daily",
-    },
-  ];
+  // const columns = [
+  //   {
+  //     key: "gaming",
+  //     label: "Gaming",
+  //   },
+  //   {
+  //     key: "work",
+  //     label: "Work",
+  //   },
+  //   {
+  //     key: "daily",
+  //     label: "Daily",
+  //   },
+  // ];
   return (
     <div>
-      <div>
+      {/* <div>
         <p className="text-center font-bold text-base text-slate-800">
           Main Priority
         </p>
@@ -61,7 +61,7 @@ export default function SWARAMain() {
             </TableRow>
           )}
         </TableBody>
-      </Table>
+      </Table> */}
     </div>
   );
 }

@@ -44,7 +44,7 @@ export default function SWARASecondary() {
           Secondary Priority
         </p>
       </div>
-      <Table aria-label="Example table with dynamic content">
+      <Table aria-label="tablecalcsecondary">
         <TableHeader columns={columns}>
           {(column) => (
             <TableColumn key={column.key}>{column.label}</TableColumn>
@@ -54,7 +54,7 @@ export default function SWARASecondary() {
           {(item) => (
             <TableRow key={item.key}>
               {(columnKey) => (
-                <TableCell>{getKeyValue(item, columnKey)}</TableCell>
+                <TableCell className="text-center">{getKeyValue(item, columnKey)}</TableCell>
               )}
             </TableRow>
           )}
