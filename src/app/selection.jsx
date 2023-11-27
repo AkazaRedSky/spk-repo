@@ -85,7 +85,7 @@ export default function SelectionBox() {
   setTimeout(() => {
     setIsLoading(false);
     setResultVisibility(true);
-  }, 15000); // 15 seconds
+  }, 6900); // 6.9 seconds
   };
   return (
     <div>

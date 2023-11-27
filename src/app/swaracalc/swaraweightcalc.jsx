@@ -12,7 +12,7 @@ import {
 import { SWARAContext } from "src/app/context/swaracontext";
 
 export default function SWARAWeight() {
-  const { mainPriorityIndex, secondaryPriorityIndex } =
+  const { mainPriorityIndex, secondaryPriorityIndex, resultVisibility } =
     useContext(SWARAContext);
   const [data, setData] = useState([]);
   const criteria = [
@@ -59,10 +59,10 @@ export default function SWARAWeight() {
       mainPriorityIndex["gaming"],
       mainPriorityIndex["work"],
       mainPriorityIndex["daily"],
-      Number(secondaryPriorityIndex["processor"]+3),
-      Number(secondaryPriorityIndex["graphiccard"]+3),
-      Number(secondaryPriorityIndex["storage"]+3),
-      Number(secondaryPriorityIndex["ram"]+3),
+      Number(secondaryPriorityIndex["processor"] + 3),
+      Number(secondaryPriorityIndex["graphiccard"] + 3),
+      Number(secondaryPriorityIndex["storage"] + 3),
+      Number(secondaryPriorityIndex["ram"] + 3),
     ];
     setData([priorities]);
   }, [mainPriorityIndex, secondaryPriorityIndex]);
@@ -96,24 +96,47 @@ export default function SWARAWeight() {
           Final Calculation
         </p>
       </div>
-      <Table aria-label="tabelcalcfinal">
-        <TableHeader columns={columns}>
-          {(column) => (
-            <TableColumn className="text-center" key={column.key}>{column.label}</TableColumn>
-          )}
-        </TableHeader>
-        <TableBody items={rows}>
-          {(item) => (
-            <TableRow key={item.key}>
-              {(columnKey) => (
-                <TableCell className="text-center" key={`${item.key}-${columnKey}`}>
-                  {item[columnKey]}
-                </TableCell>
+      {resultVisibility ? (
+        <>
+          <Table aria-label="tabelcalcfinal">
+            <TableHeader columns={columns}>
+              {(column) => (
+                <TableColumn className="text-center" key={column.key}>
+                  {column.label}
+                </TableColumn>
               )}
-            </TableRow>
-          )}
-        </TableBody>
-      </Table>
+            </TableHeader>
+            <TableBody items={rows}>
+              {(item) => (
+                <TableRow key={item.key}>
+                  {(columnKey) => (
+                    <TableCell
+                      className="text-center"
+                      key={`${item.key}-${columnKey}`}
+                    >
+                      {item[columnKey]}
+                    </TableCell>
+                  )}
+                </TableRow>
+              )}
+            </TableBody>
+          </Table>
+        </>
+      ) : (
+        <>
+        <Table aria-label="tabelcalcfinal">
+            <TableHeader columns={columns}>
+              {(column) => (
+                <TableColumn className="text-center" key={column.key}>
+                  {column.label}
+                </TableColumn>
+              )}
+            </TableHeader>
+            <TableBody items={rows}>
+            </TableBody>
+          </Table>
+        </>
+      )}
     </div>
   );
 }

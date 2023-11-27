@@ -7,7 +7,7 @@ import SWARACalc from "./swaracalc/swaracalc";
 import { SWARAContext } from "./context/swaracontext";
 
 export default function MainPage() {
-  const [maxBudget, setMaxBudget] = useState(5000000);
+  const [maxBudget, setMaxBudget] = useState(100);
   const [resultVisibility, setResultVisibility] = useState(false);
   const [mainPriorityIndex, setMainPriorityIndex] = useState({
     gaming: "1",
