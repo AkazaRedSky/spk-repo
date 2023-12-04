@@ -16,131 +16,16 @@ import {
   Button,
   useDisclosure,
   Checkbox,
+  Input,
 } from "@nextui-org/react";
+import { MainContext } from "@/app/context/maincontext";
 
 export default function AdminData() {
-  const [VGALists, setVGALists] = useState([
-    {
-      key: 1,
-      name: "GeForce RTX 4090",
-      price: 27500000,
-      auxiliary: "i9-13900K, STORAGE, RAM",
-    },
-    {
-      key: 2,
-      name: "Radeon RX 7900 XTX",
-      price: 22500000,
-      auxiliary: "i9-13900K, STORAGE, RAM",
-    },
-    {
-      key: 3,
-      name: "GeForce RTX 4080",
-      price: 17500000,
-      auxiliary: "i9-13900K, STORAGE, RAM",
-    },
-    {
-      key: 4,
-      name: "Radeon RX 7900 XT",
-      price: 16500000,
-      auxiliary: "i9-13900K, STORAGE, RAM",
-    },
-    {
-      key: 5,
-      name: "Radeon RX 6950 XT",
-      price: 13500000,
-      auxiliary: "i9-13900K, STORAGE, RAM",
-    },
-    {
-      key: 6,
-      name: "GeForce RTX 4070 Ti",
-      price: 11000000,
-      auxiliary: "i9-13900K, STORAGE, RAM",
-    },
-    {
-      key: 7,
-      name: "GeForce RTX 3090 Ti",
-      price: 10000000,
-      auxiliary: "i9-13900K, STORAGE, RAM",
-    },
-    {
-      key: 8,
-      name: "GeForce RTX 3070 Ti",
-      price: 7000000,
-      auxiliary: "i9-13900K, STORAGE, RAM",
-    },
-    {
-      key: 9,
-      name: "Radeon RX 6750 XT",
-      price: 6000000,
-      auxiliary: "i9-13900K, STORAGE, RAM",
-    },
-    {
-      key: 10,
-      name: "GeForce RTX 4060 Ti",
-      price: 5500000,
-      auxiliary: "i9-13900K, STORAGE, RAM",
-    },
-    {
-      key: 11,
-      name: "GeForce RTX 4060 Ti",
-      price: 5500000,
-      auxiliary: "i9-13900K, STORAGE, RAM",
-    },
-    {
-      key: 12,
-      name: "GeForce RTX 3070",
-      price: 5000000,
-      auxiliary: "i9-13900K, STORAGE, RAM",
-    },
-    {
-      key: 13,
-      name: "Radeon RX 6700 XT",
-      price: 4500000,
-      auxiliary: "i9-13900K, STORAGE, RAM",
-    },
-    {
-      key: 13,
-      name: "GeForce RTX 2080 Ti",
-      price: 4000000,
-      auxiliary: "i9-13900K, STORAGE, RAM",
-    },
-    {
-      key: 14,
-      name: "GeForce RTX 3060 Ti",
-      price: 3500000,
-      auxiliary: "i9-13900K, STORAGE, RAM",
-    },
-    {
-      key: 15,
-      name: "GeForce RTX 2080 Super",
-      price: 3000000,
-      auxiliary: "i9-13900K, STORAGE, RAM",
-    },
-    {
-      key: 16,
-      name: "Radeon RX 6700 10GB",
-      price: 2500000,
-      auxiliary: "i9-13900K, STORAGE, RAM",
-    },
-    {
-      key: 17,
-      name: "GeForce RTX 4060",
-      price: 2500000,
-      auxiliary: "i9-13900K, STORAGE, RAM",
-    },
-    {
-      key: 18,
-      name: "GeForce RTX 2080",
-      price: 2250000,
-      auxiliary: "i9-13900K, STORAGE, RAM",
-    },
-    {
-      key: 19,
-      name: "Radeon RX 7600",
-      price: 1500000,
-      auxiliary: "i9-13900K, STORAGE, RAM",
-    },
-  ]);
+  const { VGALists, setVGALists } = useContext(MainContext);
+  const [vgaName, setvgaName] = useState();
+  const [auxiliaryComponents, setAuxiliaryComponents] = useState();
+  const [totalPrice, setTotalPrice] = useState();
+
   const columns = [
     {
       key: "name",
@@ -155,34 +40,119 @@ export default function AdminData() {
       label: "Total Price",
     },
   ];
+  const handlevgaNameChange = (e) => {
+    setvgaName(e.target.value);
+  };
+  const handleAuxiliaryComponentChange = (e) => {
+    setAuxiliaryComponents(e.target.value);
+  };
+  const handlePriceChange = (e) => {
+    setTotalPrice(e.target.value.replace(/\D/, ""));
+  };
+  const handleSubmit = (e) => {
+    const newItem = {
+      key: VGALists.length + 1,
+      name: vgaName,
+      price: totalPrice,
+      auxiliary: auxiliaryComponents,
+    };
+
+    setVGALists([...VGALists, newItem]);
+    setvgaName();
+    setAuxiliaryComponents();
+    setTotalPrice();
+  };
+
+  const handleItemEdit = (key, newName, newPrice, newAuxiliary) => {
+    setVGALists(
+      VGALists.map((item) =>
+        VGALists.key === key
+          ? { ...item, name: newName, price: newPrice, auxiliary: newAuxiliary }
+          : item
+      )
+    );
+  };
 
   return (
-    <div>
-      <Table aria-label="tabelcalcfinal">
-        <TableHeader columns={columns}>
-          {columns.map((column) => (
-            <TableColumn className="text-center" key={column.key}>
-              {column.label}
+    <div className="relative gap-y-2">
+      <div className="relative p-4 bg-white">
+        <p className="text-left font-bold text-base text-slate-800">
+          Add New Items
+        </p>
+        <div className="flex gap-x-2 justify-between">
+          <Input
+            type="text"
+            label="Graphic Card"
+            variant="bordered"
+            placeholder="Enter Graphic Card name"
+            className="max-w-xs font-black"
+            value={vgaName}
+            onChange={handlevgaNameChange}
+          />
+          <Input
+            type="text"
+            label="Auxiliary Components"
+            variant="bordered"
+            placeholder="Enter Auxiliary Components name"
+            className="max-w-xs font-black"
+            value={auxiliaryComponents}
+            onChange={handleAuxiliaryComponentChange}
+          />
+          <Input
+            type="text"
+            label="Total Price"
+            variant="bordered"
+            placeholder="Enter Total Price"
+            className="max-w-xs font-black"
+            value={totalPrice}
+            onChange={handlePriceChange}
+          />
+        </div>
+        <div className="flex justify-end gap-y-2 mt-2">
+          <Button
+            color="success"
+            className="flex text-center text-sm text-white"
+            onClick={handleSubmit}
+          >
+            Submit
+          </Button>
+        </div>
+      </div>
+      <br />
+      <div>
+        <Table aria-label="tabelcalcfinal">
+          <TableHeader columns={columns}>
+            {columns.map((column) => (
+              <TableColumn className="text-center" key={column.key}>
+                {column.label}
+              </TableColumn>
+            ))}
+            <TableColumn className="text-center" key={"action"}>
+              Actions
             </TableColumn>
-          ))}
-        </TableHeader>
-        <TableBody
-          items={VGALists}
-        >
-          {(item) => (
-            <TableRow key={item.key}>
-              {columns.map((column) => (
-                <TableCell
-                  className="text-center"
-                  key={`${item.key}-${column.key}`}
-                >
-                  {item[column.key]}
+          </TableHeader>
+          <TableBody items={VGALists}>
+            {(item) => (
+              <TableRow key={item.key}>
+                {columns.map((column) => (
+                  <TableCell
+                    className="text-center"
+                    key={`${item.key}-${column.key}`}
+                  >
+                    {item[column.key]}
+                  </TableCell>
+                ))}
+                <TableCell key={`${item.key}-action`} className="text-center">
+                  <div className="gap-x-2">
+                    <Button color="danger">Delete</Button>
+                    <Button color="success">Edit</Button>
+                  </div>
                 </TableCell>
-              ))}
-            </TableRow>
-          )}
-        </TableBody>
-      </Table>
+              </TableRow>
+            )}
+          </TableBody>
+        </Table>
+      </div>
     </div>
   );
 }
