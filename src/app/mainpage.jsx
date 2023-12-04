@@ -5,8 +5,7 @@ import { Button } from "@nextui-org/react";
 import UserPage from "./userpage";
 import AdminPage from "./adminpage";
 import Title from "./title";
-import { PageContext } from "./context/pagecontext";
-import AdminNavbar from "./admin/admin-navbar";
+import { MainContext } from "./context/maincontext";
 
 export default function MainPage() {
   const [currentPage, setCurrentPage] = useState("user");
@@ -15,7 +14,7 @@ export default function MainPage() {
     setCurrentPage("admin");
   };
   return (
-    <PageContext.Provider
+    <MainContext.Provider
       value={{
         currentPage,
         setCurrentPage,
@@ -41,6 +40,6 @@ export default function MainPage() {
           <AdminPage />
         </>
       )}
-    </PageContext.Provider>
+    </MainContext.Provider>
   );
 }

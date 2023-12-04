@@ -1,19 +1,30 @@
 "use client";
 
 import React, { useState, useContext } from "react";
-import { Input, Button } from "@nextui-org/react";
+import {
+  Input,
+  Button,
+  Modal,
+  ModalContent,
+  ModalHeader,
+  ModalBody,
+  ModalFooter,
+  useDisclosure,
+} from "@nextui-org/react";
 import { EyeFilledIcon } from "components/icons/EyeFilledIcon.jsx";
 import { EyeSlashFilledIcon } from "components/icons/EyeSlashFilledIcon.jsx";
-import { LoginContext } from "../context/logincontext";
+import { AdminContext } from "../context/admincontext";
+import { MainContext } from "../context/maincontext";
 import { doc, getDoc } from "firebase/firestore";
 import { firestoredb } from "api/firestore.js";
 
 export default function AdminLogin() {
-  const { currentUser, setCurrentUser } = useContext(LoginContext);
+  const { currentUser, setCurrentUser } = useContext(AdminContext);
+  const { currentPage, setCurrentPage } = useContext(MainContext);
   const [username, setUsername] = useState();
   const [password, setPassword] = useState();
-  const [errorModal, setErrorModal] = useState();
-
+  const { isOpen, onOpen, onOpenChange } = useDisclosure();
+  const [errorMessage, setErrorMessage] = useState();
 
   const handleUsernameChange = (e) => {
     setUsername(e.target.value);
@@ -27,32 +38,31 @@ export default function AdminLogin() {
 
     const docRef = doc(firestoredb, "account", username);
     const docSnap = await getDoc(docRef);
-  
+
     let success = false;
-    let isError = false;
-  
+
     if (docSnap.exists()) {
       const userData = docSnap.data();
       if (userData.password === password) {
         success = true;
+        setCurrentUser(username);
+        setUsername();
+        setPassword();
       } else {
-        isError = true;
+        setErrorMessage("Password does not match!");
+        onOpen();
+        setPassword();
       }
     } else {
-      isError = true;
-    }
-  
-    if (success) {
-      console.log("Login successful");
-      // Add any additional logic for successful login
-    } else if (isError) {
-      console.log("Login failed");
-      // Add any additional logic for failed login
+      setErrorMessage("Username does not exist!");
+      onOpen();
+      setPassword();
     }
   };
 
-
-
+const switchPageUser = (e) => {
+  setCurrentPage("user");
+}
 
   // Password Eye toggler
   const [isVisible, setIsVisible] = useState(false);
@@ -61,9 +71,13 @@ export default function AdminLogin() {
   return (
     <div className="flex flex-col items-center justify-center h-screen">
       <div className="bg-white w-72 h-72 rounded-lg flex flex-col items-center justify-center gap-4 p-2">
+      <Button
+            radius="full"
+            className="font-bold h-8 w-4 bg-gradient-to-tr from-cyan-500 to-lime-500 text-white shadow-lg"
+            onClick={switchPageUser}
+          > Back </Button>
         <p className="font-bold text-lg text-black">LOGIN</p>
         <Input
-          isClearable
           type="text"
           label="Username"
           variant="bordered"
@@ -94,17 +108,35 @@ export default function AdminLogin() {
           value={password}
           onChange={handlePasswordChange}
         />
-        <button className=" text-blue-700 text-xs font-light">
+        <button className={`text-blue-700 text-xs font-light`} disabled>
           Forgot Password
         </button>
         <Button
           color="success"
-          className="text-white font-bold"
+          className={`text-white font-bold ${
+            username && password ? "" : "cursor-not-allowed"
+          }`}
           onClick={handleSubmit}
+          disabled={!username || !password}
         >
           Submit
         </Button>
       </div>
+      <Modal isOpen={isOpen} onOpenChange={onOpenChange}>
+        <ModalContent>
+          {(onClose) => (
+            <>
+              <ModalHeader className="flex flex-col gap-1">ERROR</ModalHeader>
+              <ModalBody>{errorMessage}</ModalBody>
+              <ModalFooter>
+                <Button color="danger" variant="light" onPress={onClose}>
+                  Close
+                </Button>
+              </ModalFooter>
+            </>
+          )}
+        </ModalContent>
+      </Modal>
     </div>
   );
 }

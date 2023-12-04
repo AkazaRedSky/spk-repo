@@ -1,6 +1,7 @@
 import React from 'react'
 
-export default function Header() {
+export default function AdminHeaders
+() {
   return (
     <div>header</div>
   )

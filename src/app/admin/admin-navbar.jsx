@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useContext } from "react";
 import {
   Navbar,
   NavbarBrand,
@@ -9,33 +9,59 @@ import {
   Link,
   Button,
 } from "@nextui-org/react";
+import { AdminContext } from "../context/admincontext";
 
 export default function AdminNavbar() {
+  const { currentPage, setCurrentPage, setCurrentUser } =
+    useContext(AdminContext);
+
+  const handleLogOut = (e) => {
+    setCurrentUser();
+  };
+  const handleCurrentPage = (e) => {
+    setCurrentPage(e);
+  };
   return (
     <Navbar isBordered>
       <NavbarBrand>
         <p className="font-bold text-inherit">SWARA ADMIN</p>
       </NavbarBrand>
       <NavbarContent className="hidden sm:flex gap-4" justify="center">
-        <NavbarItem>
-          <Link color="foreground" href="#">
-            Features
+        <NavbarItem isActive={currentPage === 'dashboard'}>
+          <Link
+            color="#09AACD"
+            onClick={() => handleCurrentPage("dashboard")}
+            aria-current={currentPage === "dashboard" ? "page" : undefined}
+          >
+            Dashboard
           </Link>
         </NavbarItem>
-        <NavbarItem isActive>
-          <Link href="#" aria-current="page">
-            Tables
+        <NavbarItem isActive={currentPage === 'headers'}>
+          <Link
+            color="#09AACD"
+            onClick={() => handleCurrentPage("headers")}
+            aria-current={currentPage === "headers" ? "page" : undefined}
+          >
+            Table Headers
           </Link>
         </NavbarItem>
-        <NavbarItem>
-          <Link color="foreground" href="#">
+        <NavbarItem isActive={currentPage === 'data'}>
+          <Link
+            color="#09AACD"
+            onClick={() => handleCurrentPage("data")}
+            aria-current={currentPage === "data" ? "page" : undefined}
+          >
             Data
           </Link>
         </NavbarItem>
       </NavbarContent>
       <NavbarContent justify="end">
         <NavbarItem>
-          <Button as={Link} color="primary" href="#" variant="flat">
+          <Button
+            className="text-white font-bold"
+            color="primary"
+            onClick={handleLogOut}
+          >
             Log out
           </Button>
         </NavbarItem>
