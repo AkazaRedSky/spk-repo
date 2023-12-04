@@ -1,44 +1,45 @@
 "use client";
 
-import React, { useState } from "react";
-import SelectionBox from "./selection";
-import Results from "./results";
-import SWARACalc from "./swaracalc/swaracalc";
-import { SWARAContext } from "./context/swaracontext";
+import React, { useState, useContext } from "react";
+import { Button } from "@nextui-org/react";
+import UserPage from "./userpage";
+import AdminPage from "./adminpage";
+import Title from "./title";
+import { MainContext } from "./context/maincontext";
 
 export default function MainPage() {
-  const [maxBudget, setMaxBudget] = useState(100);
-  const [resultVisibility, setResultVisibility] = useState(false);
-  const [mainPriorityIndex, setMainPriorityIndex] = useState({
-    gaming: "1",
-    work: "2",
-    daily: "3",
-  });
-  const [secondaryPriorityIndex, setSecondaryPriorityIndex] = useState({
-    processor: "1",
-    graphiccard: "2",
-    storage: "3",
-    ram: "4",
-  });
+  const [currentPage, setCurrentPage] = useState("user");
 
+  const switchPageAdmin = (e) => {
+    setCurrentPage("admin");
+  };
   return (
-    <>
-      <SWARAContext.Provider
-        value={{
-          maxBudget,
-          setMaxBudget,
-          mainPriorityIndex,
-          setMainPriorityIndex,
-          secondaryPriorityIndex,
-          setSecondaryPriorityIndex,
-          resultVisibility,
-          setResultVisibility,
-        }}
-      >
-        <SelectionBox />
-        <SWARACalc />
-        <Results />
-      </SWARAContext.Provider>
-    </>
+    <MainContext.Provider
+      value={{
+        currentPage,
+        setCurrentPage,
+      }}
+    >
+      {currentPage === "user" ? (
+        <div className="p-12">
+          <Button
+            radius="full"
+            className="font-bold h-8 w-4 bg-gradient-to-tr from-cyan-500 to-lime-500 text-white shadow-lg"
+            onClick={switchPageAdmin}
+          >
+            Admin
+          </Button>
+          <Title />
+
+          <div className="flex col gap-5 justify-between">
+            <UserPage />
+          </div>
+        </div>
+      ) : (
+        <>
+          <AdminPage />
+        </>
+      )}
+    </MainContext.Provider>
   );
 }
