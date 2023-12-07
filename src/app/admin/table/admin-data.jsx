@@ -8,14 +8,7 @@ import {
   TableBody,
   TableRow,
   TableCell,
-  Modal,
-  ModalContent,
-  ModalHeader,
-  ModalBody,
-  ModalFooter,
   Button,
-  useDisclosure,
-  Checkbox,
   Input,
 } from "@nextui-org/react";
 import { MainContext } from "@/app/context/maincontext";
