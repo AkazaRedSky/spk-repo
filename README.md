@@ -1,7 +1,9 @@
 ## A SWARA-Based Decision Support System for Graphic Card Selection Using GPU Benchmark Data
 
-### Requirements
-* [Google Firebase](https://firebase.google.com) with Firestore 
+## Requirements
+* [Google Firebase](https://firebase.google.com) with Firestore
+* [Node JS](https://nodejs.org/)
+* [NPM](https://www.npmjs.com/)
 
 ## Installation and Setup Instructions
 
